@@ -14,7 +14,7 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     Optional<Article> findArticleByCodeArticle(String code);
 
     List<Article> findAllByCategoryId(Integer idCategory);
-    
+
     @Query(value = "select * from article where codearticle= :code", nativeQuery = true)
     List<Article> findByCustomNativeQuery(@Param("code") String c);
 
