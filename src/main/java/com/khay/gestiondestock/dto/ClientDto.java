@@ -29,7 +29,7 @@ public class ClientDto {
     @JsonIgnore
     private List<CommandeClientDto> commandeClients;
 
-    public static ClientDto fromEntiy(Client client) {
+    public static ClientDto fromEntity(Client client) {
         if (client == null) {
             return null;
         }

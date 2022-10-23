@@ -12,6 +12,5 @@ public class LigneCommandeClientValidator {
         List<String> errors = new ArrayList<> ();
 
         return errors;
-
     }
 }

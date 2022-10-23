@@ -6,7 +6,6 @@ public enum ErrorCodes {
     ARTICLE_NOT_FOUND(1000),
     ARTICLE_NOT_VALID(1001),
     ARTICLE_NON_MODIFABLLE(1002),
-    // TODO complete the rest of the error codes
     CATEGORY_NOT_FOUND(2000),
     CATEGORY_NOT_VALID(2001),
     CLIENT_NOT_FOUND(3000),

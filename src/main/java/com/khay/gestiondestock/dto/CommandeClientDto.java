@@ -36,7 +36,7 @@ public class CommandeClientDto {
                 .code(commandeClient.getCode())
                 .dateCommande(commandeClient.getDateCommande())
                 .idEntreprise(commandeClient.getIdEntreprise())
-                .client(ClientDto.fromEntiy(commandeClient.getClient()))
+                .client(ClientDto.fromEntity(commandeClient.getClient()))
                 .build();
     }
 
