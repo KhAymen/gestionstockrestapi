@@ -1,12 +1,14 @@
 package com.khay.gestiondestock.controller.api;
 
 import com.khay.gestiondestock.dto.EntrepriseDto;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static com.khay.gestiondestock.utils.Constants.ENTREPRISE_ENDPOINT;
 
+@Api(ENTREPRISE_ENDPOINT)
 public interface EntrepriseApi {
 
     @PostMapping(ENTREPRISE_ENDPOINT + "/create")

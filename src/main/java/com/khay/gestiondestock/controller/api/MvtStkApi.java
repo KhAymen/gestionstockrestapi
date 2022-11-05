@@ -3,6 +3,7 @@ package com.khay.gestiondestock.controller.api;
 
 
 import com.khay.gestiondestock.dto.MvtStkDto;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static com.khay.gestiondestock.utils.Constants.APP_ROOT;
 
+@Api(APP_ROOT + "/mvtstk")
 public interface MvtStkApi {
 
     @GetMapping(APP_ROOT + "/mvtstk/stockReel/{idArticle}")

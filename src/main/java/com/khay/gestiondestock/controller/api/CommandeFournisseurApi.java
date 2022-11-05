@@ -2,6 +2,7 @@ package com.khay.gestiondestock.controller.api;
 
 import com.khay.gestiondestock.dto.CommandeFournisseurDto;
 import com.khay.gestiondestock.model.EtatCommande;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import static com.khay.gestiondestock.utils.Constants.*;
 
+@Api(COMMANDE_FOURNISSUER_ENDPOINT)
 public interface CommandeFournisseurApi {
 
     @PatchMapping(COMMANDE_FOURNISSUER_ENDPOINT + "/update/etat/{idCommande}/{etatCommande}")

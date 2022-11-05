@@ -5,7 +5,8 @@ spring:
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-## Specifier SGBD
+
+  ## Specifier SGBD
   jpa:
     database: MYSQL
     show-sql: false
@@ -17,6 +18,11 @@ spring:
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.MySQL5Dialect
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 
 server:
   port: 8081

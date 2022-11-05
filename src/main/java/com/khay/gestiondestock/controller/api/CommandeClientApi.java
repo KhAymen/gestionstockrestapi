@@ -3,6 +3,7 @@ package com.khay.gestiondestock.controller.api;
 import com.khay.gestiondestock.dto.CommandeClientDto;
 import com.khay.gestiondestock.dto.LigneCommandeClientDto;
 import com.khay.gestiondestock.model.EtatCommande;
+import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.khay.gestiondestock.utils.Constants.APP_ROOT;
-
+@Api(APP_ROOT + "/commandesclients")
 public interface CommandeClientApi {
 
     // Response Entity permet d'englober une réponse
