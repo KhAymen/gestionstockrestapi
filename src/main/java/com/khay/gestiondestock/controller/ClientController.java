@@ -19,8 +19,8 @@ public class ClientController implements ClientApi {
     }
 
     @Override
-    public ClientDto save(ClientDto dto) {
-        return clientService.save(dto);
+    public ClientDto save(ClientDto clientDto) {
+        return clientService.save(clientDto);
     }
 
     @Override

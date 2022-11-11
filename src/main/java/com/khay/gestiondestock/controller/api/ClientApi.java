@@ -13,7 +13,7 @@ import static com.khay.gestiondestock.utils.Constants.APP_ROOT;
 public interface ClientApi {
 
     @PostMapping(value = APP_ROOT+ "/clients/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ClientDto save(@RequestBody ClientDto dto);
+    ClientDto save(@RequestBody ClientDto clientDto);
 
     @GetMapping(value = APP_ROOT + "/clients/{idClient}", consumes = MediaType.APPLICATION_JSON_VALUE)
     ClientDto findById(@PathVariable("idClient") Integer id);

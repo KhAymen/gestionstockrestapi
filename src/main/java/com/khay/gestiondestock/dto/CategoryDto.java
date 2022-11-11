@@ -49,6 +49,5 @@ public class CategoryDto {
         category.setIdEntreprise(categoryDto.getIdEntreprise());
 
         return category;
-
     }
 }

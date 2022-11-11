@@ -36,5 +36,4 @@ public class LigneVente extends AbstractEntity {
 
     @Column(name = "identreprise")
     private Integer idEntreprise;
-
 }

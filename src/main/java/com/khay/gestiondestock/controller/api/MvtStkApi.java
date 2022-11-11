@@ -24,15 +24,15 @@ public interface MvtStkApi {
     List<MvtStkDto> mvtStkArticle(@PathVariable("idArticle") Integer idArticle);
 
     @PostMapping(APP_ROOT + "/mvtstk/entree")
-    MvtStkDto entreeStock(@RequestBody MvtStkDto dto);
+    MvtStkDto entreeStock(@RequestBody MvtStkDto mvtStkDto);
 
     @PostMapping(APP_ROOT + "/mvtstk/sortie")
-    MvtStkDto sortieStk(@RequestBody MvtStkDto dto);
+    MvtStkDto sortieStk(@RequestBody MvtStkDto mvtStkDto);
 
     @PostMapping(APP_ROOT + "/mvtstk/correctionpos")
-    MvtStkDto correctionStockPos(@RequestBody MvtStkDto dto);
+    MvtStkDto correctionStockPos(@RequestBody MvtStkDto mvtStkDto);
 
     @PostMapping(APP_ROOT + "/mvtstk/correctionneg")
-    MvtStkDto correctionStockNeg(@RequestBody MvtStkDto dto);
+    MvtStkDto correctionStockNeg(@RequestBody MvtStkDto mvtStkDto);
 
 }

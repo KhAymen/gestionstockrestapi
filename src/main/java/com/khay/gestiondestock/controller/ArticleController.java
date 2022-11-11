@@ -1,6 +1,5 @@
 package com.khay.gestiondestock.controller;
 
-
 import com.khay.gestiondestock.controller.api.ArticleApi;
 import com.khay.gestiondestock.dto.ArticleDto;
 import com.khay.gestiondestock.dto.LigneCommandeClientDto;

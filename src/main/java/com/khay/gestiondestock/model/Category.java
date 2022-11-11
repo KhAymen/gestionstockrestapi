@@ -33,6 +33,4 @@ public class Category extends AbstractEntity{
     // Une categorie a plusieurs articles
     @OneToMany(mappedBy = "category")
     private List<Article> atricles;
-
-
 }

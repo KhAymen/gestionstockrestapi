@@ -12,7 +12,7 @@ import static com.khay.gestiondestock.utils.Constants.ENTREPRISE_ENDPOINT;
 public interface EntrepriseApi {
 
     @PostMapping(ENTREPRISE_ENDPOINT + "/create")
-    EntrepriseDto save(@RequestBody EntrepriseDto dto);
+    EntrepriseDto save(@RequestBody EntrepriseDto entrepriseDto);
 
     @GetMapping(ENTREPRISE_ENDPOINT + "/{idEntreprise}")
     EntrepriseDto findById(@PathVariable("idEntreprise") Integer id);

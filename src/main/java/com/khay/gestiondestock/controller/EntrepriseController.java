@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 public class EntrepriseController implements EntrepriseApi {
-
     private EntrepriseService entrepriseService;
 
     @Autowired
@@ -19,8 +18,8 @@ public class EntrepriseController implements EntrepriseApi {
     }
 
     @Override
-    public EntrepriseDto save(EntrepriseDto dto) {
-        return entrepriseService.save(dto);
+    public EntrepriseDto save(EntrepriseDto entrepriseDto) {
+        return entrepriseService.save(entrepriseDto);
     }
 
     @Override

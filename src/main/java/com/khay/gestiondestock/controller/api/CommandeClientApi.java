@@ -16,7 +16,7 @@ public interface CommandeClientApi {
 
     // Response Entity permet d'englober une réponse
     @PostMapping(value = APP_ROOT + "/commandesclients/create")
-    ResponseEntity<CommandeClientDto> save(@RequestBody CommandeClientDto dto);
+    ResponseEntity<CommandeClientDto> save(@RequestBody CommandeClientDto commandeClientDto);
 
     @PatchMapping(value = APP_ROOT + "/commandesclients/update/etat/{idCommande}/{etatCommande}")
     ResponseEntity<CommandeClientDto> updateEtatCommande(@PathVariable("idCommande") Integer idCommande, @PathVariable("etatCommande") EtatCommande etatCommande);

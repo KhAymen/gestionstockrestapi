@@ -32,7 +32,6 @@ public class MvtStkDto {
                 .build();
     }
 
-
     public static MvtStk toEntity(MvtStkDto mvtStkDto) {
         if (mvtStkDto == null) {
             return null;

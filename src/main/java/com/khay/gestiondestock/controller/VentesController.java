@@ -1,6 +1,6 @@
 package com.khay.gestiondestock.controller;
 
-import com.khay.gestiondestock.controller.api.VenteApi;
+import com.khay.gestiondestock.controller.api.VentesApi;
 import com.khay.gestiondestock.dto.VentesDto;
 import com.khay.gestiondestock.services.VentesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class VentesController implements VenteApi {
+public class VentesController implements VentesApi {
 
     private VentesService ventesService;
 
@@ -19,8 +19,8 @@ public class VentesController implements VenteApi {
     }
 
     @Override
-    public VentesDto save(VentesDto dto) {
-        return ventesService.save(dto);
+    public VentesDto save(VentesDto ventesDto) {
+        return ventesService.save(ventesDto);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class VentesController implements VenteApi {
     }
 
     @Override
-    public VentesDto findVenteByCode(String code) {
+    public VentesDto findByCode(String code) {
         return ventesService.findByCode(code);
     }
 

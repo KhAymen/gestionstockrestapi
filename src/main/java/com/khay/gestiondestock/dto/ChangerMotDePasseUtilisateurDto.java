@@ -1,6 +1,5 @@
 package com.khay.gestiondestock.dto;
 
-
 import lombok.Builder;
 import lombok.Data;
 

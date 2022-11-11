@@ -1,12 +1,10 @@
 package com.khay.gestiondestock.handlers;
 
-
 import com.khay.gestiondestock.exception.EntityNotFoundException;
 import com.khay.gestiondestock.exception.InvalidEntityException;
 import com.khay.gestiondestock.exception.InvalidOperationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -27,7 +25,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDto, notFound);
     }
 
-
     @ExceptionHandler(InvalidOperationException.class)
     public ResponseEntity<ErrorDto> handleException(InvalidOperationException exception, WebRequest webRequest) {
         final HttpStatus notFound = HttpStatus.BAD_REQUEST;
@@ -40,7 +37,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDto, notFound);
     }
 
-
     @ExceptionHandler(InvalidEntityException.class)
     public ResponseEntity<ErrorDto> handleException(InvalidEntityException exception, WebRequest webRequest) {
         final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
@@ -51,7 +47,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .errors(exception.getErrors())
                 .build();
         return new ResponseEntity<>(errorDto, badRequest);
-
     }
 
 

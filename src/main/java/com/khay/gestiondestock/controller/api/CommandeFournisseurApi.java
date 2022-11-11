@@ -29,7 +29,7 @@ public interface CommandeFournisseurApi {
     CommandeFournisseurDto deleteArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande);
 
     @PostMapping(CREATE_COMMANDE_FOURNISSUER_ENDPOINT)
-    CommandeFournisseurDto save(@RequestBody CommandeFournisseurDto dto);
+    CommandeFournisseurDto save(@RequestBody CommandeFournisseurDto commandeFournisseurDto);
 
     @GetMapping(FIND_COMMANDE_FOURNISSUER_BY_ID_ENDPOINT)
     CommandeFournisseurDto findById(@PathVariable("idCommandeFournisseur") Integer id);

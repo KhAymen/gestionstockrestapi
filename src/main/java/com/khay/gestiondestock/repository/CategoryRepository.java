@@ -1,6 +1,5 @@
 package com.khay.gestiondestock.repository;
 
-
 import com.khay.gestiondestock.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 

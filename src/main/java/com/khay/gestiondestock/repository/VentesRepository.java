@@ -1,6 +1,5 @@
 package com.khay.gestiondestock.repository;
 
-
 import com.khay.gestiondestock.model.Ventes;
 import org.springframework.data.jpa.repository.JpaRepository;
 

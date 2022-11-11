@@ -1,9 +1,7 @@
 package com.khay.gestiondestock.dto;
 
-
 import com.khay.gestiondestock.model.Article;
 import com.khay.gestiondestock.model.LigneVente;
-import com.khay.gestiondestock.model.Ventes;
 import lombok.Builder;
 import lombok.Data;
 

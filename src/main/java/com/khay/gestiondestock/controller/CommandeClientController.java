@@ -43,8 +43,8 @@ public class CommandeClientController implements CommandeClientApi {
     }
 
     @Override
-    public ResponseEntity<CommandeClientDto> save(CommandeClientDto dto) {
-        return ResponseEntity.ok(commandeClientService.save(dto));
+    public ResponseEntity<CommandeClientDto> save(CommandeClientDto commandeClientDto) {
+        return ResponseEntity.ok(commandeClientService.save(commandeClientDto));
     }
 
     @Override

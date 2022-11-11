@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 public class UtilisateurController implements UtilisateurApi {
-
     private UtilisateurService utilisateurService;
 
     @Autowired
@@ -19,8 +18,8 @@ public class UtilisateurController implements UtilisateurApi {
     }
 
     @Override
-    public UtilisateurDto save(UtilisateurDto dto) {
-        return utilisateurService.save(dto);
+    public UtilisateurDto save(UtilisateurDto utilisateurDto) {
+        return utilisateurService.save(utilisateurDto);
     }
 
     @Override

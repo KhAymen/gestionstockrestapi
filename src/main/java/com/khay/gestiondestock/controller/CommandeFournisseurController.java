@@ -1,6 +1,5 @@
 package com.khay.gestiondestock.controller;
 
-
 import com.khay.gestiondestock.controller.api.CommandeFournisseurApi;
 import com.khay.gestiondestock.dto.CommandeFournisseurDto;
 import com.khay.gestiondestock.model.EtatCommande;
@@ -47,8 +46,8 @@ public class CommandeFournisseurController implements CommandeFournisseurApi {
     }
 
     @Override
-    public CommandeFournisseurDto save(CommandeFournisseurDto dto) {
-        return commandeFournisseurSerivce.save(dto);
+    public CommandeFournisseurDto save(CommandeFournisseurDto commandeFournisseurDto) {
+        return commandeFournisseurSerivce.save(commandeFournisseurDto);
     }
 
     @Override

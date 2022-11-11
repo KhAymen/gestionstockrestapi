@@ -13,15 +13,14 @@ import static com.khay.gestiondestock.utils.Constants.ENTREPRISE_ENDPOINT;
 public interface UtilisateurApi {
 
     @PostMapping(UTILISATEUR_ENDPOINT + "/create")
-    UtilisateurDto save(@RequestBody UtilisateurDto dto);
+    UtilisateurDto save(@RequestBody UtilisateurDto utilisateurDto);
 
     @GetMapping(UTILISATEUR_ENDPOINT + "/{idUtilisateur}")
     UtilisateurDto findById(@PathVariable("idUtilisateur") Integer id);
 
-
     @GetMapping(UTILISATEUR_ENDPOINT +"/all")
     List<UtilisateurDto> findAll();
 
-    @DeleteMapping(ENTREPRISE_ENDPOINT + "/{idUtilisateur}/delete")
+    @DeleteMapping(ENTREPRISE_ENDPOINT + "/delete/{idUtilisateur}")
     void delete(@PathVariable("idUtilisateur") Integer id);
 }

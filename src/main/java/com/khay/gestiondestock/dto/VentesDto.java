@@ -21,8 +21,7 @@ public class VentesDto {
     private Integer idEntreprise;
 
     private List<LigneVenteDto> ligneVentes;
-
-
+    
     public static VentesDto fromEntity(Ventes vente) {
         if (vente == null){
             return null;

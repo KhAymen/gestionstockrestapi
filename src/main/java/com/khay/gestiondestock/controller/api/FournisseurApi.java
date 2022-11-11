@@ -12,7 +12,7 @@ import static com.khay.gestiondestock.utils.Constants.FOURNISSEUR_ENDPOINT;
 public interface FournisseurApi {
 
     @PostMapping(FOURNISSEUR_ENDPOINT + "/create")
-    FournisseurDto save(@RequestBody FournisseurDto dto);
+    FournisseurDto save(@RequestBody FournisseurDto fournisseurDto);
 
     @GetMapping(FOURNISSEUR_ENDPOINT + "/{idFournisseur}")
     FournisseurDto findById(@PathVariable("idFournisseur") Integer id);
