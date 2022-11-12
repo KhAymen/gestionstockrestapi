@@ -10,10 +10,10 @@ spring:
   jpa:
     database: MYSQL
     show-sql: false
-    #properties:
-      #hibernate:
-        #ejb:
-         # interceptor: com.m2i.gestiondestock.interceptor
+    properties:
+      hibernate:
+        ejb:
+          interceptor: com.khay.gestiondestock.interceptor.Interceptor
   # Hibernate DDL Auto (create, create-drop, update)
     hibernate:
       ddl-auto: update
