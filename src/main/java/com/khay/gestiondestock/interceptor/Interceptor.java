@@ -8,6 +8,7 @@ public class Interceptor extends EmptyInterceptor {
     @Override
     public String onPrepareStatement(String sql) {
         if (StringUtils.hasLength(sql) && sql.toLowerCase().startsWith("select")) {
+            // select utilisateur0_.
             final String entityName = sql.substring(7, sql.indexOf("."));
             final String idEntreprise = MDC.get("idEntreprise");
             if (StringUtils.hasLength(entityName)
@@ -16,7 +17,7 @@ public class Interceptor extends EmptyInterceptor {
                     && StringUtils.hasLength(idEntreprise)) {
 
                 if (sql.contains("where")) {
-                    sql = sql + "and " + entityName + ".identreprise = " + idEntreprise;
+                    sql = sql + " and " + entityName + ".identreprise = " + idEntreprise;
                 } else {
                     sql = sql + " where " + entityName + ".identreprise = " + idEntreprise;
                 }

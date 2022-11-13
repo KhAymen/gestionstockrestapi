@@ -1,6 +1,5 @@
 package com.khay.gestiondestock.services.impl;
 
-
 import com.khay.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import com.khay.gestiondestock.dto.UtilisateurDto;
 import com.khay.gestiondestock.exception.EntityNotFoundException;
@@ -53,7 +52,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public List<UtilisateurDto> findAll() {
-
         return utilisateurRepository.findAll().stream()
                 .map(UtilisateurDto::fromEntity).collect(Collectors.toList());
     }
@@ -71,7 +69,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
         return utilisateurRepository.findUtilisateurByEmail(email)
                 .map(UtilisateurDto::fromEntity)
-                .orElseThrow(() -> new EntityNotFoundException("Aucun utilisateur avec cet email " + email + " n' a ete trouvé dans la base de données", ErrorCodes.UTILISATEUR_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Aucun utilisateur avec cet email " + email + " n' a ete trouvé dans la base de données",
+                        ErrorCodes.UTILISATEUR_NOT_FOUND)
+                );
     }
 
     @Override
@@ -125,6 +126,4 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         }
         utilisateurRepository.deleteById(id);
     }
-
-
 }
