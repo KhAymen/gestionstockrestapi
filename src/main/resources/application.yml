@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/gestionstock?createDatabaseIfNotExist=true&userSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true
     username: root
-    password: password
+    password: password123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 
