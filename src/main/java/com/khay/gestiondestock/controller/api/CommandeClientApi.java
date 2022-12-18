@@ -24,7 +24,7 @@ public interface CommandeClientApi {
     @PatchMapping(value = APP_ROOT + "/commandesclients/update/quantite/{idCommande}/{idLigneCommande}/{quantite}")
         ResponseEntity<CommandeClientDto> updateQuantiteCommande(@PathVariable("idCommande") Integer idCommande,@PathVariable("idLigneCommande")  Integer idLigneCommande,@PathVariable("quantite") BigDecimal quantite);
 
-    @PatchMapping(value = APP_ROOT + "/commandesclients/update/clients/{idCommande}/{idClient}")
+    @PatchMapping(value = APP_ROOT + "/commandesclients/update/client/{idCommande}/{idClient}")
     ResponseEntity<CommandeClientDto>  updateClient(@PathVariable("idCommande") Integer idCommande,@PathVariable("idClient") Integer idClient);
 
     @PatchMapping(value = APP_ROOT + "/commandesclients/update/article/{idCommande}/{idLigneCommande}/{idArticle}")
@@ -46,5 +46,5 @@ public interface CommandeClientApi {
     ResponseEntity<CommandeClientDto> findByCode(@PathVariable String codeCommandeClient);
 
     @DeleteMapping(APP_ROOT + "/commandesclients/delete/{idCommandeClient}")
-    ResponseEntity delete(@PathVariable Integer idCommandeClient);
+    ResponseEntity<Void> delete(@PathVariable Integer idCommandeClient);
 }

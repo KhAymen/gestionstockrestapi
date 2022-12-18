@@ -20,6 +20,9 @@ public class CommandeClient extends AbstractEntity{
     @Column(name = "datecommande")
     private Instant dateCommande;
 
+    @Column(name = "etatcommande")
+    private EtatCommande etatCommande;
+
     /*
      *  "idEntreprise c'est un attribut purement technique si on parle de conception UML
      *  ce n'est 100% correct de le mettre. Mais ci on parle pour simplifier l'implementation

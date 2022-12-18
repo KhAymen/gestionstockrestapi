@@ -20,7 +20,7 @@ public interface CommandeFournisseurSerivce {
 
     CommandeFournisseurDto save(CommandeFournisseurDto commandeFournisseurDto);
 
-    // Delete article means delete lignecommandefournisseur
+    // Delete article ===> delete LigneCommandeFournisseur
     CommandeFournisseurDto deleteArticle(Integer idCommande, Integer idLigneCommande);
 
     CommandeFournisseurDto findById(Integer id);

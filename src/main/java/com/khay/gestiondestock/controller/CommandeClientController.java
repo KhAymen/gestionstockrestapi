@@ -63,7 +63,7 @@ public class CommandeClientController implements CommandeClientApi {
     }
 
     @Override
-    public ResponseEntity delete(Integer idCommandeClient) {
+    public ResponseEntity<Void> delete(Integer idCommandeClient) {
         commandeClientService.delete(idCommandeClient);
         return ResponseEntity.ok().build();
     }

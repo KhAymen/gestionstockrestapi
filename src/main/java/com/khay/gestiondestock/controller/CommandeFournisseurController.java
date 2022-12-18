@@ -2,9 +2,11 @@ package com.khay.gestiondestock.controller;
 
 import com.khay.gestiondestock.controller.api.CommandeFournisseurApi;
 import com.khay.gestiondestock.dto.CommandeFournisseurDto;
+import com.khay.gestiondestock.dto.LigneCommandeFournisseurDto;
 import com.khay.gestiondestock.model.EtatCommande;
 import com.khay.gestiondestock.services.CommandeFournisseurSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
@@ -68,5 +70,10 @@ public class CommandeFournisseurController implements CommandeFournisseurApi {
     @Override
     public void delete(Integer id) {
         commandeFournisseurSerivce.delete(id);
+    }
+
+    @Override
+    public ResponseEntity<List<LigneCommandeFournisseurDto>> findAlllignesCommandesFournisseurByCommandeFournisseurId(Integer idCommande) {
+        return ResponseEntity.ok(commandeFournisseurSerivce.findAllLignesCommandesFournisseurByCommandeFournisseurId(idCommande));
     }
 }

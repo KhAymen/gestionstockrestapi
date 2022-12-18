@@ -1,5 +1,6 @@
 package com.khay.gestiondestock.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.khay.gestiondestock.model.CommandeFournisseur;
 import com.khay.gestiondestock.model.EtatCommande;
 import lombok.Builder;
@@ -18,13 +19,14 @@ public class CommandeFournisseurDto {
 
     private Instant dateCommande;
 
+    private EtatCommande etatCommande;
+
     private Integer idEntreprise;
 
     private FournisseurDto fournisseur;
 
+    @JsonIgnore
     private List<LigneCommandeFournisseurDto> ligneCommandeFournisseurs;
-
-    private EtatCommande etatCommande;
 
     public static CommandeFournisseurDto fromEntity(CommandeFournisseur commandeFournisseur) {
         if (commandeFournisseur == null) {
@@ -35,8 +37,9 @@ public class CommandeFournisseurDto {
                 .id(commandeFournisseur.getId())
                 .code(commandeFournisseur.getCode())
                 .dateCommande(commandeFournisseur.getDateCommande())
-                .idEntreprise(commandeFournisseur.getIdEntreprise())
+                .etatCommande(commandeFournisseur.getEtatCommande())
                 .fournisseur(FournisseurDto.fromEntity(commandeFournisseur.getFournisseur()))
+                .idEntreprise(commandeFournisseur.getIdEntreprise())
                 .build();
     }
 
@@ -49,8 +52,9 @@ public class CommandeFournisseurDto {
         commandeFournisseur.setId(commandeFournisseurDto.getId());
         commandeFournisseur.setCode(commandeFournisseurDto.getCode());
         commandeFournisseur.setDateCommande(commandeFournisseurDto.getDateCommande());
-        commandeFournisseur.setIdEntreprise(commandeFournisseurDto.getIdEntreprise());
+        commandeFournisseur.setEtatCommande(commandeFournisseurDto.getEtatCommande());
         commandeFournisseur.setFournisseur(FournisseurDto.toEntity(commandeFournisseurDto.getFournisseur()));
+        commandeFournisseur.setIdEntreprise(commandeFournisseurDto.getIdEntreprise());
 
         return commandeFournisseur;
     }

@@ -13,16 +13,16 @@ public interface CommandeClientService {
 
     CommandeClientDto findById(Integer id);
 
-    CommandeClientDto updateEtatCommande(Integer id, EtatCommande etatCommande);
+    CommandeClientDto updateEtatCommande(Integer idCommande, EtatCommande etatCommande);
 
     CommandeClientDto updateQuantiteCommande(Integer idCommande, Integer idLigneCommande, BigDecimal quantite);
 
     CommandeClientDto updateClient(Integer idCommande, Integer idClient);
 
+    CommandeClientDto updateArticle(Integer idCommande, Integer idLigneCommande,  Integer newIdArticle);
+
     // delete an article ==> delete ligneCommndeClient
     CommandeClientDto deleteArticle(Integer idCommande, Integer idLigneCommande);
-
-    CommandeClientDto updateArticle(Integer idCommande, Integer idLigneCommande,  Integer newIdArticle);
 
     CommandeClientDto findByCode(String code);
 

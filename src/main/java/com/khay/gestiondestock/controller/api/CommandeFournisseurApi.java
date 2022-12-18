@@ -1,8 +1,11 @@
 package com.khay.gestiondestock.controller.api;
 
 import com.khay.gestiondestock.dto.CommandeFournisseurDto;
+import com.khay.gestiondestock.dto.LigneCommandeClientDto;
+import com.khay.gestiondestock.dto.LigneCommandeFournisseurDto;
 import com.khay.gestiondestock.model.EtatCommande;
 import io.swagger.annotations.Api;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -42,4 +45,7 @@ public interface CommandeFournisseurApi {
 
     @DeleteMapping(DELETE_COMMANDE_FOURNISSUER_ENDPOINT)
     void delete(@PathVariable("idCommandeFournisseur") Integer id);
+
+    @GetMapping(COMMANDE_FOURNISSUER_ENDPOINT + "/lignesCommande/{idCommande}")
+    ResponseEntity<List<LigneCommandeFournisseurDto>> findAlllignesCommandesFournisseurByCommandeFournisseurId(@PathVariable("idCommande") Integer idCommande);
 }
