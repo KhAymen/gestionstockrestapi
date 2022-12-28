@@ -61,7 +61,7 @@ public interface ArticleApi {
     @GetMapping(value = APP_ROOT + "/articles/historique/commandefournisseur/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
     List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(@PathVariable("idArticle") Integer idArticle);
 
-    @GetMapping(value = APP_ROOT + "/articles/filtrer/category/{idCategory}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/articles/filter/category/{idCategory}", produces = MediaType.APPLICATION_JSON_VALUE)
     List<ArticleDto> findAllArticleByIdCategory(@PathVariable("idCategory") Integer idCategory);
 
 
