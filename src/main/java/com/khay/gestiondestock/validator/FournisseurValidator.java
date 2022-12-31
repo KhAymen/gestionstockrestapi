@@ -16,6 +16,7 @@ public class FournisseurValidator {
             errors.add("Veuillez renseigner le prenom du fournisseur");
             errors.add("Veuillez renseigner le mail du fournisseur");
             errors.add("Veuillez renseigner le numero de telephone du fournisseur");
+            errors.addAll(AdresseValidator.validate(null));
             return errors;
         }
         if (!StringUtils.hasLength(fournisseurDto.getNom())) {
@@ -30,6 +31,9 @@ public class FournisseurValidator {
         if (!StringUtils.hasLength(fournisseurDto.getNumTel())) {
             errors.add("Veuillez renseigner le numero de telephone du fournisseur");
         }
+
+        errors.addAll(AdresseValidator.validate(fournisseurDto.getAdresse()));
+
         return errors;
     }
 }

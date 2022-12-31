@@ -76,43 +76,46 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public UtilisateurDto changerMotDePasseUtiliasateur(ChangerMotDePasseUtilisateurDto dto) {
-        validte(dto);
+    public UtilisateurDto changerMotDePasseUtiliasateur(ChangerMotDePasseUtilisateurDto changerMotDePasseUtilisateurDto) {
+        validte(changerMotDePasseUtilisateurDto);
 
-        Optional<Utilisateur> utilisateurOptional = utilisateurRepository.findById(dto.getId());
+        Optional<Utilisateur> utilisateurOptional = utilisateurRepository.findById(changerMotDePasseUtilisateurDto.getId());
 
         if (utilisateurOptional.isEmpty()) {
-            log.warn("Aucun utilisateur n'a été trouvé dans la base de donné");
-            throw new EntityNotFoundException("Aucun utilisateur n'a été trouvé dans la base de donné",
+            log.warn("Aucun utilisateur n'a été trouvé avec l'ID " + changerMotDePasseUtilisateurDto.getId());
+            throw new EntityNotFoundException("Aucun utilisateur n'a été trouvé avec l'ID " + changerMotDePasseUtilisateurDto.getId(),
                     ErrorCodes.UTILISATEUR_NOT_FOUND);
         }
 
         Utilisateur utilisateur = utilisateurOptional.get();
-        utilisateur.setMotDePasse(dto.getMotDePasse());
-        return UtilisateurDto.fromEntity(utilisateurRepository.save(utilisateur));
+        utilisateur.setMotDePasse(changerMotDePasseUtilisateurDto.getMotDePasse());
+
+        return UtilisateurDto.fromEntity(
+                utilisateurRepository.save(utilisateur)
+        );
     }
 
-    private void validte(ChangerMotDePasseUtilisateurDto dto) {
-        if (dto == null) {
-            log.error("Impossible de modifier le mot de passe avec un objet null");
-            throw new InvalidOperationException("Aucune information n'a été fournie pour changer le mot de passe ",
+    private void validte(ChangerMotDePasseUtilisateurDto changerMotDePasseUtilisateurDto) {
+        if (changerMotDePasseUtilisateurDto == null) {
+            log.error("Impossible de modifier le mot de passe avec un objet NULL");
+            throw new InvalidOperationException("Aucune information n'a été fourni pour pouvoir changer le mot de passe",
                     ErrorCodes.UTILISATEUR_CHANGE_PASSWORD_OBJECT_NOT_VALID);
         }
-        if (dto.getId() == null) {
-            log.error("Impossible de modifier le mot de passe avec un ID null");
-            throw new InvalidOperationException("ID utilisateur null, Impossible de modifier le mot de passe ",
-                    ErrorCodes.UTILISATEUR_CHANGE_PASSWORD_OBJECT_NOT_VALID);
-
-        }
-        if (!StringUtils.hasLength(dto.getMotDePasse()) || !StringUtils.hasLength(dto.getConfirmMotDePasse())) {
-            log.error("Impossible de modifier le mot de passe avec deux mot de passe différent");
-            throw new InvalidOperationException("Mot de passe utilisateur non conforme ",
+        if (changerMotDePasseUtilisateurDto.getId() == null) {
+            log.error("Impossible de modifier le mot de passe avec un ID NULL");
+            throw new InvalidOperationException("ID utilisateur null:: Impossible de modifier le mot de passe",
                     ErrorCodes.UTILISATEUR_CHANGE_PASSWORD_OBJECT_NOT_VALID);
 
         }
-        if (!dto.getMotDePasse().equals(dto.getConfirmMotDePasse())) {
-            log.error("Impossible de modifier le mot de passe avec un ID null");
-            throw new InvalidOperationException("ID utilisateur null, Impossible de modifier le mot de passe ",
+        if (!StringUtils.hasLength(changerMotDePasseUtilisateurDto.getMotDePasse()) || !StringUtils.hasLength(changerMotDePasseUtilisateurDto.getConfirmMotDePasse())) {
+            log.error("Impossible de modifier le mot de passe avec un mot de passe NULL");
+            throw new InvalidOperationException("Mot de passe utilisateur null:: Impossible de modifier le mot de passe",
+                    ErrorCodes.UTILISATEUR_CHANGE_PASSWORD_OBJECT_NOT_VALID);
+
+        }
+        if (!changerMotDePasseUtilisateurDto.getMotDePasse().equals(changerMotDePasseUtilisateurDto.getConfirmMotDePasse())) {
+            log.error("Impossible de modifier le mot de passe avec deux mots de passe different");
+            throw new InvalidOperationException("Mots de passe utilisateur non conformes",
                     ErrorCodes.UTILISATEUR_CHANGE_PASSWORD_OBJECT_NOT_VALID);
 
         }

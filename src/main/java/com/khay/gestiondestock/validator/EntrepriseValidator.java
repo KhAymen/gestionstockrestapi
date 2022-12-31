@@ -12,47 +12,36 @@ public class EntrepriseValidator {
         List<String> errors = new ArrayList<>();
         if (entrepriseDto == null) {
             errors.add("Veuillez renseigner le nom d'entreprise");
-            errors.add("Veuillez renseigner le prenom d'entreprise");
-            errors.add("Veuillez renseigner le mot de passe d'entreprise");
-            errors.add("Veuillez renseigner l'adresse d'entreprise");
+            errors.add("Veuillez renseigner la description de l'entreprise");
+            errors.add("Veuillez renseigner le code fiscal de l'entreprise");
+            errors.add("Veuillez renseigner l'email de l'entreprise");
+            errors.add("Veuillez renseigner le numero de telephone de l'entreprise");
+            errors.addAll(AdresseValidator.validate(null));
+
             return errors;
         }
         if (!StringUtils.hasLength(entrepriseDto.getNom())) {
-            errors.add("Veuillez renseigner le nom d'entreprise");
+            errors.add("Veuillez renseigner le nom de l'entreprise");
         }
 
-//        if (!StringUtils.hasLength(entrepriseDto.getPrenom())) {
-//            errors.add("Veuillez renseigner le prenom d'entreprise");
-//        }
+        if (!StringUtils.hasLength(entrepriseDto.getDescription())) {
+            errors.add("Veuillez renseigner la description de l'entreprise");
+        }
+
+        if (!StringUtils.hasLength(entrepriseDto.getCodeFiscal())) {
+            errors.add("Veuillez renseigner le code fiscal de l'entreprise");
+        }
 
         if (!StringUtils.hasLength(entrepriseDto.getEmail())) {
-            errors.add("Veuillez renseigner l'email d'entreprise");
+            errors.add("Veuillez renseigner l'email de l'entreprise");
         }
 
-//        if (!StringUtils.hasLength(entrepriseDto.getMotDePasse())) {
-//            errors.add("Veuillez renseigner le mot de passe d'entreprise");
-//        }
-//
-//        if (entrepriseDto.getDateDeNaissance() == null) {
-//            errors.add("Veuillez renseigner la date de naissance d'entreprise");
-//        }
-
-        if (entrepriseDto.getAdresse() == null) {
-            errors.add("Veuillez renseigner l'adresse d'entreprise");
-        } else {
-            if (!StringUtils.hasLength(entrepriseDto.getAdresse().getAdresse1())) {
-                errors.add("Le champ 'Adresse 1' est obligatoire");
-            }
-            if (!StringUtils.hasLength(entrepriseDto.getAdresse().getVille())) {
-                errors.add("Le champ 'Ville' est obligatoire");
-            }
-            if (!StringUtils.hasLength(entrepriseDto.getAdresse().getCodePostale())) {
-                errors.add("Le champ 'Code Postale' est obligatoire");
-            }
-            if (!StringUtils.hasLength(entrepriseDto.getAdresse().getPays())) {
-                errors.add("Le champ 'Pays' est obligatoire");
-            }
+        if (!StringUtils.hasLength(entrepriseDto.getNumTel())) {
+            errors.add("Veuillez renseigner le numero de telephone de l'entreprise");
         }
+
+        errors.addAll(AdresseValidator.validate(entrepriseDto.getAdresse()));
+
         return errors;
     }
 }

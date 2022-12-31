@@ -9,6 +9,8 @@ public class ChangerMotDePasseUtilisateurDto {
 
     private Integer id;
 
+//    private String email;
+
     private String motDePasse;
 
     private String confirmMotDePasse;
