@@ -1,6 +1,5 @@
 package com.khay.gestiondestock.validator;
 
-
 import com.khay.gestiondestock.dto.MvtStkDto;
 
 import java.util.ArrayList;

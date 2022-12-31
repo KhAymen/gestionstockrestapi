@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface MvtStkService {
 
-    BigDecimal stockReelArticle(Integer idArticle);
+     BigDecimal stockReelArticle(Integer idArticle);
 
     List<MvtStkDto> mvtStkArticle(Integer idArticle);
 
     MvtStkDto entreeStock(MvtStkDto mvtStkDto);
 
-    MvtStkDto sortieStk(MvtStkDto mvtStkDto);
+    MvtStkDto sortieStock(MvtStkDto mvtStkDto);
 
     MvtStkDto correctionStockPos(MvtStkDto mvtStkDto);
 

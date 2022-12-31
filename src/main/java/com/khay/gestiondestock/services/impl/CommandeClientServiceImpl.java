@@ -155,13 +155,13 @@ public class  CommandeClientServiceImpl implements CommandeClientService {
         CommandeClientDto commandeClient = checkEtatCommande(idCommande);
 
         commandeClient.setEtatCommande(etatCommande);
-        CommandeClient savedCmd = commandeClientRepository.save(CommandeClientDto.toEntity(commandeClient));
+        CommandeClient savedCmdClt = commandeClientRepository.save(CommandeClientDto.toEntity(commandeClient));
         // We have to check that the commande is livree before updating the command
         if (commandeClient.isCommandeLivree()) {
             updateMvtStock(idCommande);
         }
 
-        return CommandeClientDto.fromEntity(savedCmd);
+        return CommandeClientDto.fromEntity(savedCmdClt);
     }
 
     @Override
@@ -324,15 +324,16 @@ public class  CommandeClientServiceImpl implements CommandeClientService {
 
         List<LigneCommandeClient> ligneCommandeClients = ligneCommandeClientRepository.findAllByCommandeClientId(idCommande);
         ligneCommandeClients.forEach(ligne -> {
-            MvtStkDto sortieDtk = MvtStkDto.builder()
+            MvtStkDto mvtStkDto = MvtStkDto.builder()
                     .article(ArticleDto.fromEntity(ligne.getArticle()))
                     .dateMvt(Instant.now())
                     .typeMvt(TypeMvtStock.SORTIE)
                     .sourceMvtStock(SourceMvtStock.COMMANDE_CLIENT)
                     .quantite(ligne.getQuantite())
-                    //    .idEntreprise (ligne.getIdEntreprise())
+                    .idEntreprise (ligne.getIdEntreprise())
                     .build();
-            mvtStkService.sortieStk(sortieDtk);
+
+            mvtStkService.sortieStock(mvtStkDto);
         });
     }
 }

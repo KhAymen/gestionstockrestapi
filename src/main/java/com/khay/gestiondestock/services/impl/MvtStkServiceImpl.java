@@ -22,72 +22,83 @@ import java.util.stream.Collectors;
 public class MvtStkServiceImpl implements MvtStkService {
 
 
-    private MvtStkRepository repository;
+    private MvtStkRepository mvtStkRepository;
     private ArticleService articleService;
 
     @Autowired
     public MvtStkServiceImpl(MvtStkRepository repository, ArticleService articleService) {
-        this.repository = repository;
+        this.mvtStkRepository = repository;
         this.articleService = articleService;
     }
 
     @Override
     public BigDecimal stockReelArticle(Integer idArticle) {
         if (idArticle == null) {
-            log.warn("ID article est null");
+            log.warn("ID article is NULL");
             return BigDecimal.valueOf(-1);
         }
         articleService.findById(idArticle);
-        return repository.stockReelArticle(idArticle);
+        return mvtStkRepository.stockReelArticle(idArticle);
     }
 
     @Override
     public List<MvtStkDto> mvtStkArticle(Integer idArticle) {
-        return repository.findAllByArticleId(idArticle)
-                .stream()
+        return mvtStkRepository.findAllByArticleId(idArticle).stream()
                 .map(MvtStkDto::fromEntity).collect(Collectors.toList());
     }
 
     @Override
-    public MvtStkDto entreeStock(MvtStkDto dto) {
-        return entreePostive(dto, TypeMvtStock.ENTREE);
+    public MvtStkDto entreeStock(MvtStkDto mvtStkDto) {
+        return entreePostive(mvtStkDto, TypeMvtStock.ENTREE);
     }
 
     @Override
-    public MvtStkDto sortieStk(MvtStkDto dto) {
-        return sortieNegative(dto, TypeMvtStock.SORTIE);
+    public MvtStkDto sortieStock(MvtStkDto mvtStkDto) {
+        return sortieNegative(mvtStkDto, TypeMvtStock.SORTIE);
     }
 
     @Override
-    public MvtStkDto correctionStockPos(MvtStkDto dto) {
-        return entreePostive(dto, TypeMvtStock.CORRECTION_POS);
+    public MvtStkDto correctionStockPos(MvtStkDto mvtStkDto) {
+        return entreePostive(mvtStkDto, TypeMvtStock.CORRECTION_POS);
     }
 
     @Override
-    public MvtStkDto correctionStockNeg(MvtStkDto dto) {
-        return entreePostive(dto, TypeMvtStock.CORRECTION_NEG);
+    public MvtStkDto correctionStockNeg(MvtStkDto mvtStkDto) {
+        return sortieNegative(mvtStkDto, TypeMvtStock.CORRECTION_NEG);
     }
 
 
-    private MvtStkDto entreePostive(MvtStkDto dto, TypeMvtStock typeMvtStock) {
-        List<String> errors = MvtStockValidator.validate(dto);
+    private MvtStkDto entreePostive(MvtStkDto mvtStkDto, TypeMvtStock typeMvtStock) {
+        List<String> errors = MvtStockValidator.validate(mvtStkDto);
         if (!errors.isEmpty()) {
-            log.error("le stock id n'est pas valide", dto);
+            log.error("le stock id n'est pas valide", mvtStkDto);
             throw new InvalidEntityException("Le mouvement du stock n'est pas valide", ErrorCodes.MVT_STK_NOT_VALID, errors);
         }
-        dto.setTypeMvt(typeMvtStock); // For making sure that is an entrance
-        dto.setQuantite(BigDecimal.valueOf(Math.abs(dto.getQuantite().doubleValue())));
-        return MvtStkDto.fromEntity(repository.save(MvtStkDto.toEntity(dto)));
+        mvtStkDto.setTypeMvt(typeMvtStock); // For making sure that is an entrance
+        mvtStkDto.setQuantite(
+                BigDecimal.valueOf(
+                        Math.abs(mvtStkDto.getQuantite().doubleValue())
+                )
+        );
+        return MvtStkDto.fromEntity(
+                mvtStkRepository.save(MvtStkDto.toEntity(mvtStkDto))
+        );
     }
 
-    private MvtStkDto sortieNegative(MvtStkDto dto, TypeMvtStock typeMvtStock) {
-        List<String> errors = MvtStockValidator.validate(dto);
+    private MvtStkDto sortieNegative(MvtStkDto mvtStkDto, TypeMvtStock typeMvtStock) {
+        List<String> errors = MvtStockValidator.validate(mvtStkDto);
         if (!errors.isEmpty()) {
             log.error("le stock id n'est pas valide");
             throw new InvalidEntityException("Le mouvement du stock n'est pas valide", ErrorCodes.MVT_STK_NOT_VALID, errors);
         }
-        dto.setTypeMvt(typeMvtStock); // For making sure that is exit
-        dto.setQuantite(BigDecimal.valueOf(Math.abs(dto.getQuantite().doubleValue()) * -1));
-        return MvtStkDto.fromEntity(repository.save(MvtStkDto.toEntity(dto)));
+        mvtStkDto.setTypeMvt(typeMvtStock); // For making sure that is exit
+        mvtStkDto.setQuantite(
+                BigDecimal.valueOf(
+                        Math.abs(mvtStkDto.getQuantite().doubleValue()) * -1
+                )
+        );
+        return MvtStkDto.fromEntity(
+                mvtStkRepository.save(MvtStkDto.toEntity(mvtStkDto))
+        );
     }
 }

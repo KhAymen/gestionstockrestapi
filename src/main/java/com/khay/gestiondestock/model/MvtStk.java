@@ -23,8 +23,8 @@ public class MvtStk extends AbstractEntity {
     @Column(name = "typemvt")
     private TypeMvtStock typeMvt;
 
-    @Column(name = "sourcemvtStock")
-    private SourceMvtStock sourceMvtStock;
+    @Column(name = "sourcemvt")
+    private SourceMvtStock sourceMvt;
 
     @ManyToOne
     @JoinColumn(name = "idarticle")

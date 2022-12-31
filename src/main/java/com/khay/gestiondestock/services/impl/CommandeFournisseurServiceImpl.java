@@ -11,6 +11,7 @@ import com.khay.gestiondestock.repository.CommandeFournisseurRepository;
 import com.khay.gestiondestock.repository.FournisseurRepository;
 import com.khay.gestiondestock.repository.LigneCommandeFournisseurRepository;
 import com.khay.gestiondestock.services.CommandeFournisseurSerivce;
+import com.khay.gestiondestock.services.MvtStkService;
 import com.khay.gestiondestock.validator.ArticleValidator;
 import com.khay.gestiondestock.validator.CommandeFournisseurValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,12 +35,15 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurSerivc
     private CommandeFournisseurRepository commandeFournisseurRepository;
     private LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository;
 
+    private MvtStkService mvtStkService;
+
     @Autowired
-    public CommandeFournisseurServiceImpl(ArticleRepository articleRepository, FournisseurRepository fournisseurRepository, CommandeFournisseurRepository commandeFournisseurRepository, LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository) {
+    public CommandeFournisseurServiceImpl(ArticleRepository articleRepository, FournisseurRepository fournisseurRepository, CommandeFournisseurRepository commandeFournisseurRepository, LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository, MvtStkService mvtStkService) {
         this.articleRepository = articleRepository;
         this.fournisseurRepository = fournisseurRepository;
         this.commandeFournisseurRepository = commandeFournisseurRepository;
         this.ligneCommandeFournisseurRepository = ligneCommandeFournisseurRepository;
+        this.mvtStkService = mvtStkService;
     }
 
     private void checkIdCommande(Integer idCommande) {
@@ -86,9 +91,14 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurSerivc
         }
         CommandeFournisseurDto commandeFournisseurDto = checkEtatCommande(idCommande);
         commandeFournisseurDto.setEtatCommande(etatCommande);
-        return CommandeFournisseurDto.fromEntity(
-                commandeFournisseurRepository.save(CommandeFournisseurDto.toEntity(commandeFournisseurDto))
-        );
+
+        CommandeFournisseur savedCommande = commandeFournisseurRepository.save(CommandeFournisseurDto.toEntity(commandeFournisseurDto));
+
+        if (commandeFournisseurDto.isCommandeLivree()) {
+            updateMvtStock(idCommande);
+        }
+
+        return CommandeFournisseurDto.fromEntity(savedCommande);
     }
 
     @Override
@@ -282,6 +292,22 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurSerivc
             return;
         }
         commandeFournisseurRepository.deleteById(id);
+    }
 
+    private void updateMvtStock(Integer idCommande) {
+
+        List<LigneCommandeFournisseur> ligneCommandeFournisseur = ligneCommandeFournisseurRepository.findAllByCommandeFournisseurId(idCommande);
+        ligneCommandeFournisseur.forEach(ligne -> {
+            MvtStkDto mvtStkDto = MvtStkDto.builder()
+                    .article(ArticleDto.fromEntity(ligne.getArticle()))
+                    .dateMvt(Instant.now())
+                    .typeMvt(TypeMvtStock.ENTREE)
+                    .sourceMvtStock(SourceMvtStock.COMMANDE_FOURNISSEUR)
+                    .quantite(ligne.getQuantite())
+                    .idEntreprise (ligne.getIdEntreprise())
+                    .build();
+
+            mvtStkService.entreeStock(mvtStkDto);
+        });
     }
 }

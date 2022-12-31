@@ -7,10 +7,7 @@ import com.khay.gestiondestock.dto.VentesDto;
 import com.khay.gestiondestock.exception.EntityNotFoundException;
 import com.khay.gestiondestock.exception.ErrorCodes;
 import com.khay.gestiondestock.exception.InvalidEntityException;
-import com.khay.gestiondestock.model.Article;
-import com.khay.gestiondestock.model.LigneVente;
-import com.khay.gestiondestock.model.TypeMvtStock;
-import com.khay.gestiondestock.model.Ventes;
+import com.khay.gestiondestock.model.*;
 import com.khay.gestiondestock.repository.ArticleRepository;
 import com.khay.gestiondestock.repository.LigneVenteRepository;
 import com.khay.gestiondestock.repository.VentesRepository;
@@ -28,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 
 @Service
 @Slf4j
@@ -77,7 +73,7 @@ public class VentesServiceImpl implements VentesService {
             LigneVente ligneVente = LigneVenteDto.toEntity(ligneVenteDto);
             ligneVente.setVente(savedVente);
             ligneVenteRepository.save(ligneVente);
-//            updateMvtStock(ligneVente);
+            updateMvtStock(ligneVente);
         });
         return VentesDto.fromEntity(savedVente);
     }
@@ -129,10 +125,10 @@ public class VentesServiceImpl implements VentesService {
                 .article(ArticleDto.fromEntity(ligneVente.getArticle()))
                 .dateMvt(Instant.now())
                 .typeMvt(TypeMvtStock.SORTIE)
-//                .sourceMvtStock(SourceMvtStock.VENTE)
+                .sourceMvtStock(SourceMvtStock.VENTE)
                 .quantite(ligneVente.getQuantite())
                 .idEntreprise(ligneVente.getIdEntreprise())
                 .build();
-        mvtStkService.sortieStk(sortieDtk);
+        mvtStkService.sortieStock(sortieDtk);
     }
 }

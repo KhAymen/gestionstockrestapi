@@ -1,7 +1,5 @@
 package com.khay.gestiondestock.controller.api;
 
-
-
 import com.khay.gestiondestock.dto.MvtStkDto;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +25,7 @@ public interface MvtStkApi {
     MvtStkDto entreeStock(@RequestBody MvtStkDto mvtStkDto);
 
     @PostMapping(APP_ROOT + "/mvtstk/sortie")
-    MvtStkDto sortieStk(@RequestBody MvtStkDto mvtStkDto);
+    MvtStkDto sortieStock(@RequestBody MvtStkDto mvtStkDto);
 
     @PostMapping(APP_ROOT + "/mvtstk/correctionpos")
     MvtStkDto correctionStockPos(@RequestBody MvtStkDto mvtStkDto);

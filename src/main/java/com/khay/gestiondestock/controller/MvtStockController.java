@@ -4,10 +4,12 @@ import com.khay.gestiondestock.controller.api.MvtStkApi;
 import com.khay.gestiondestock.dto.MvtStkDto;
 import com.khay.gestiondestock.services.MvtStkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@RestController
 public class MvtStockController implements MvtStkApi {
 
     private MvtStkService mvtStkService;
@@ -33,8 +35,8 @@ public class MvtStockController implements MvtStkApi {
     }
 
     @Override
-    public MvtStkDto sortieStk(MvtStkDto mvtStkDto) {
-        return mvtStkService.sortieStk(mvtStkDto);
+    public MvtStkDto sortieStock(MvtStkDto mvtStkDto) {
+        return mvtStkService.sortieStock(mvtStkDto);
     }
 
     @Override
