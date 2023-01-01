@@ -7,7 +7,11 @@ import com.khay.gestiondestock.dto.LigneVenteDto;
 import com.khay.gestiondestock.exception.EntityNotFoundException;
 import com.khay.gestiondestock.exception.ErrorCodes;
 import com.khay.gestiondestock.exception.InvalidEntityException;
+import com.khay.gestiondestock.exception.InvalidOperationException;
 import com.khay.gestiondestock.model.Article;
+import com.khay.gestiondestock.model.LigneCommandeClient;
+import com.khay.gestiondestock.model.LigneCommandeFournisseur;
+import com.khay.gestiondestock.model.LigneVente;
 import com.khay.gestiondestock.repository.ArticleRepository;
 import com.khay.gestiondestock.repository.LigneCommandeClientRepository;
 import com.khay.gestiondestock.repository.LigneCommandeFournisseurRepository;
@@ -70,9 +74,9 @@ public class ArticleServiceImpl implements ArticleService {
         Optional<Article> article = articleRepository.findById(id);
         ArticleDto articleDto = ArticleDto.fromEntity(article.get());
         return Optional.of(articleDto).orElseThrow(() ->
-                        new EntityNotFoundException(
-                                "Aucun article avce L'ID " + id + " n' a été trouvé dans la base de données.",
-                                ErrorCodes.ARTICLE_NOT_FOUND));
+                new EntityNotFoundException(
+                        "Aucun article avce L'ID " + id + " n' a été trouvé dans la base de données.",
+                        ErrorCodes.ARTICLE_NOT_FOUND));
     }
 
     @Override
@@ -90,15 +94,6 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepository.findAll().stream()
                 .map(ArticleDto::fromEntity)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void delete(Integer id) {
-        if (id == null) {
-            log.error("Article ID is null");
-            return;
-        }
-        articleRepository.deleteById(id);
     }
 
     @Override
@@ -130,5 +125,27 @@ public class ArticleServiceImpl implements ArticleService {
                 .stream()
                 .map(ArticleDto::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(Integer id) {
+        if (id == null) {
+            log.error("Article ID is null");
+            return;
+        }
+        List<LigneCommandeClient> ligneCommandeClients = commandeClientRepository.findAllByArticleId(id);
+        if (!ligneCommandeClients.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un article deja utilise dans des commandes client", ErrorCodes.ARTICLE_ALREADY_IN_USE);
+        }
+        List<LigneCommandeFournisseur> ligneCommandeFournisseurs = commandeFournisseurRepository.findAllByArticleId(id);
+        if (!ligneCommandeFournisseurs.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un article deja utilise dans des commandes fournisseur", ErrorCodes.ARTICLE_ALREADY_IN_USE);
+        }
+        List<LigneVente> ligneVentes = venteRepository.findAllByArticleId(id);
+        if (!ligneVentes.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un article deja utilise dans des ventes", ErrorCodes.ARTICLE_ALREADY_IN_USE);
+        }
+
+        articleRepository.deleteById(id);
     }
 }

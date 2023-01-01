@@ -203,7 +203,6 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurSerivc
                     articleErrors.add("Impossible d'enregistrer une commande avec un article NULL");
                 }
                     }
-
             );
         }
 
@@ -291,6 +290,12 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurSerivc
             log.error("Commande fournisseur ID is NULL");
             return;
         }
+        List<LigneCommandeFournisseur> ligneCommandeFournisseurs = ligneCommandeFournisseurRepository.findAllByCommandeFournisseurId(id);
+        if (!ligneCommandeFournisseurs.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer une commande fournisseur deja utilise.",
+                    ErrorCodes.COMMANDE_FOURNISSEUR_ALREADY_IN_USE);
+        }
+
         commandeFournisseurRepository.deleteById(id);
     }
 

@@ -8,7 +8,6 @@ import com.khay.gestiondestock.exception.InvalidOperationException;
 import com.khay.gestiondestock.model.Utilisateur;
 import com.khay.gestiondestock.repository.UtilisateurRepository;
 import com.khay.gestiondestock.services.UtilisateurService;
-import jdk.jshell.execution.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,7 +76,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public UtilisateurDto changerMotDePasseUtiliasateur(ChangerMotDePasseUtilisateurDto changerMotDePasseUtilisateurDto) {
-        validte(changerMotDePasseUtilisateurDto);
+        validate(changerMotDePasseUtilisateurDto);
 
         Optional<Utilisateur> utilisateurOptional = utilisateurRepository.findById(changerMotDePasseUtilisateurDto.getId());
 
@@ -95,7 +94,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         );
     }
 
-    private void validte(ChangerMotDePasseUtilisateurDto changerMotDePasseUtilisateurDto) {
+    private void validate(ChangerMotDePasseUtilisateurDto changerMotDePasseUtilisateurDto) {
         if (changerMotDePasseUtilisateurDto == null) {
             log.error("Impossible de modifier le mot de passe avec un objet NULL");
             throw new InvalidOperationException("Aucune information n'a été fourni pour pouvoir changer le mot de passe",

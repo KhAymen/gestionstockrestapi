@@ -4,6 +4,9 @@ import com.khay.gestiondestock.dto.CategoryDto;
 import com.khay.gestiondestock.exception.EntityNotFoundException;
 import com.khay.gestiondestock.exception.ErrorCodes;
 import com.khay.gestiondestock.exception.InvalidEntityException;
+import com.khay.gestiondestock.exception.InvalidOperationException;
+import com.khay.gestiondestock.model.Article;
+import com.khay.gestiondestock.repository.ArticleRepository;
 import com.khay.gestiondestock.repository.CategoryRepository;
 import com.khay.gestiondestock.services.CategoryService;
 import com.khay.gestiondestock.validator.CategoryValidator;
@@ -22,10 +25,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     private CategoryRepository categoryRepository;
 
+    private ArticleRepository articleRepository;
+
     // Injection de dependance par constructeur
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, ArticleRepository articleRepository) {
         this.categoryRepository = categoryRepository;
+        this.articleRepository = articleRepository;
     }
 
     @Override
@@ -81,6 +87,11 @@ public class CategoryServiceImpl implements CategoryService {
             log.error("Category ID is null");
             return;
         }
+        List<Article> articles = articleRepository.findAllByCategoryId(id);
+        if (!articles.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer cette categorie qui est deja utilisee.", ErrorCodes.CATEGORY_ALREADY_IN_USE);
+        }
+
         categoryRepository.deleteById(id);
 
     }

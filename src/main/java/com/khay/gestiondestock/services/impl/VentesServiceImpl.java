@@ -7,6 +7,7 @@ import com.khay.gestiondestock.dto.VentesDto;
 import com.khay.gestiondestock.exception.EntityNotFoundException;
 import com.khay.gestiondestock.exception.ErrorCodes;
 import com.khay.gestiondestock.exception.InvalidEntityException;
+import com.khay.gestiondestock.exception.InvalidOperationException;
 import com.khay.gestiondestock.model.*;
 import com.khay.gestiondestock.repository.ArticleRepository;
 import com.khay.gestiondestock.repository.LigneVenteRepository;
@@ -114,6 +115,11 @@ public class VentesServiceImpl implements VentesService {
         if (id == null) {
             log.error("Vente ID is NULL");
             return;
+        }
+        List<LigneVente> ligneVentes = ligneVenteRepository.findAllByVenteId(id);
+        if (!ligneVentes.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer une vente ...",
+                    ErrorCodes.VENTE_ALREADY_IN_USE);
         }
         ventesRepository.deleteById(id);
     }

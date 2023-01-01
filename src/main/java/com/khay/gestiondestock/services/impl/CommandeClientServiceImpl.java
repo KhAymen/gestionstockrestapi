@@ -222,6 +222,11 @@ public class  CommandeClientServiceImpl implements CommandeClientService {
             log.error("Commande client ID is NULL");
             return;
         }
+        List<LigneCommandeClient> ligneCommandeClients = ligneCommandeClientRepository.findAllByCommandeClientId(id);
+        if (!ligneCommandeClients.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer une commande client deja utilise.",
+                    ErrorCodes.COMMANDE_CLIENT_ALREADY_IN_USE);
+        }
         commandeClientRepository.deleteById(id);
 
     }
@@ -273,11 +278,6 @@ public class  CommandeClientServiceImpl implements CommandeClientService {
                 .collect(Collectors.toList());
     }
 
-    // TODO findAllCommandeClientByCommandeClientId
-
-
-    // TODO : Refactoring of verification process
-
     private CommandeClientDto checkEtatCommande(Integer idCommande) {
         CommandeClientDto commandeClient = findById(idCommande);
         if (commandeClient.isCommandeLivree()) {
@@ -315,7 +315,7 @@ public class  CommandeClientServiceImpl implements CommandeClientService {
         Optional<LigneCommandeClient> ligneCommandeClientOptional = ligneCommandeClientRepository.findById(idLigneCommande);
         if (ligneCommandeClientOptional.isEmpty()) {
             throw new EntityNotFoundException("Aucune ligne de commande client n'a ete trouve avec l'ID " + idLigneCommande,
-                    ErrorCodes.LIGNE_COMMANDE_CLIENT_NOT_FOUND);
+                    ErrorCodes.COMMANDE_CLIENT_NOT_FOUND);
         }
         return ligneCommandeClientOptional;
     }

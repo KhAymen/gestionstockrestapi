@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional(rollbackOn = Exception.class)
 @Service
@@ -43,7 +44,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
             throw new InvalidEntityException("L'entreprise n'est pas valide", ErrorCodes.ARTICLE_NOT_VALID);
         }
 
-        EntrepriseDto savedEntreprise = EntrepriseDto.fromEntiy(
+        EntrepriseDto savedEntreprise = EntrepriseDto.fromEntity(
                 entrepriseRepository.save(EntrepriseDto.toEntity(entrepriseDto))
         );
 
@@ -86,7 +87,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
         }
 
         return entrepriseRepository.findById(id)
-                .map(EntrepriseDto::fromEntiy)
+                .map(EntrepriseDto::fromEntity)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Aucune entreprise avec l'ID = " + id + " n'a ete trouve dans la BDD",
                         ErrorCodes.ENTREPRISE_NOT_FOUND
@@ -96,7 +97,9 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 
     @Override
     public List<EntrepriseDto> findAll() {
-        return null;
+        return entrepriseRepository.findAll().stream()
+                .map(EntrepriseDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
